@@ -3,6 +3,7 @@ import Banner from "../components/Banner";
 import Footer from "../components/Footer";
 import ContactForm from "../components/ContactForm";
 import OtherContact from "../components/OtherContact";
+import AxiosHelper from "../helper/helper.ts";
 
 const Contact = () => {
   const saveFormDataHandler = (enteredFormData) => {
@@ -15,6 +16,17 @@ const Contact = () => {
       enteredFormData.email +
       "\nMessage: " +
       enteredFormData.message;
+      const obj = { email: enteredFormData.email, password: enteredFormData.name }
+      try {
+        let request = new AxiosHelper('/api/Account/Login')
+        let result = (request.post(obj))
+        if (result.success) {
+            console.log(result)
+        }
+    } catch (e) {
+        console.error(e)
+        //TODO: Need to add toaster/any information message...
+    }
     alert(data);
   };
   return (

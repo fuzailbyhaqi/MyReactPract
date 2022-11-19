@@ -9,6 +9,7 @@ export default class AxiosHelper {
   constructor(endPoint: string) {
     this.endPoint = endPoint;
     axios.defaults.baseURL = "https://api.pkubite.com/";
+    // axios.defaults.baseURL = "https://mapoliticsapi.azurewebsites.net/";
   }
 
   public get(config?: AxiosRequestConfig): Promise<any> {
@@ -27,5 +28,17 @@ export default class AxiosHelper {
     });
   }
 
- 
+  public async post<T>(requestPayload: T, config?: any): Promise<T> {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(this.endPoint, requestPayload, config)
+        .then((value: AxiosResponse) => {
+          resolve(value.data);
+        })
+        .catch((error: AxiosError) => {
+          // TODO: This has to be done... Ahmed
+          reject(error);
+        });
+    });
+  }
 }

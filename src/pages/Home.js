@@ -8,36 +8,35 @@ import { itemsHomeBoxArticle } from "../constants/AppConstants";
 import React, { useState, useEffect } from "react";
 import apiClient from "../helper/http-common";
 import "./Home.css";
-import AxiosHelper from "../helper/helper";
+import AxiosHelper from "../helper/helper.ts";
+import Constants from "../constants/Constants.ts";
+import Login from "../components/Login";
+import ListData from "../components/ListData";
 
 const Home = () => {
+  const [catg, setCatg] = useState([]);
   /*useEffect(() => {
-    getAllData();
+    fetchRegions();
   }, []);*/
 
-  const [resData, setResData] = useState([]);
+  const [loading, setLoading] = useState([]);
+
+  //Method 1 to fetch data using axios
   async function getAllData() {
     try {
-      const res = await apiClient.get(
-        "/api/FoodCategory/GetAll?pageNo=1&pageSize=1000"
-      );
+      const res = await apiClient.get(Constants.GET_ALL_CATEGORIES_PKU);
 
       const result = {
         status: res.status + "-" + res.statusText,
         headers: res.headers,
         data: res.data,
       };
-
-      {
-        res.data.result.data.map((res) => {
-          return setResData((a) => [...a, ...res.name]), console.log(res.name);
-        });
-      }
     } catch (err) {
       console.log(err.message);
     }
   }
 
+  //Default React method to fetch data
   const fetch1 = () => {
     fetch(
       "https://api.pkubite.com/api/FoodCategory/GetAll?pageNo=1&pageSize=1000"
@@ -51,43 +50,59 @@ const Home = () => {
       });
   };
 
-  const axios = require("axios").default;
-  const fetchData = () => {
-    axios
-      .get(
-        "https://api.pkubite.com/api/FoodCategory/GetAll?pageNo=1&pageSize=1000"
-      )
-      .then(function (response) {
-        // handle success
-        console.log(response);
+  //Method 2 to fetch data using axios (Mostly this is used)
+  const fetchRegions = () => {
+    const pageNO = 1;
+    const pageSize = 100;
+    setLoading("Loading..");
+    setCatg("");
+    let server = new AxiosHelper(
+      `/api/FoodCategory/GetAll?pageNo=${pageNO}&pageSize=${pageSize}`
+    );
+    server
+      .get()
+      .then((res) => {
+        const obj = {
+          pageType: "home",
+          data: res.result.data,
+        };
+        setCatg(obj);
+        setLoading("");
       })
-      .catch(function (error) {
-        // handle error
+      .catch((error) => {
         console.log(error);
-      })
-      .finally(function () {
-        // always executed
       });
   };
 
-  
-  const fetchRegions = () => {
-    let server = new AxiosHelper(`/region/getAll`)
-    server.get().then((res) => {
-        const regions = res.data
-       // setRegions(regions)
-    }).catch((error) => {
-        console.log(error)
-    })
-}
-
+  const saveLoginFormDataHandler = (enteredFormData) => {
+    console.log(enteredFormData.email);
+    console.log(enteredFormData.password);
+    const obj = {
+      email: enteredFormData.email,
+      password: enteredFormData.password,
+    };
+    try {
+      let request = new AxiosHelper(Constants.MAPOLITIC_LOGIN);
+      let result = request.post(obj);
+      console.log(result);
+      if (result.success) {
+        console.log(result);
+      }
+    } catch (e) {
+      console.log(e);
+      //  alert(e.message);
+    }
+  };
   return (
     <div>
       <div className="container-fluid">
+        <Login onSaveData={saveLoginFormDataHandler} />
         <button className="buttonHome" onClick={fetchRegions}>
           Get Data
         </button>
-        <p>{resData}</p>
+        <ListData fData={catg} />
+        <p>{loading}</p>
+
         <Banner bannerId="tm-main-bg" />
 
         <main>

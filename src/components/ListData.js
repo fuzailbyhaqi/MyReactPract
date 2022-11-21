@@ -1,26 +1,36 @@
 import "./List.css";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import React, { useRef } from "react";
 const ListData = (props) => {
+  const [onSubCat, onSubCatg] = useState("");
   const catg = props.fData.data;
   const clickedItem = (event) => {
     console.log(event.target.id);
+    console.log(event.target);
+   
   };
 
   if (props.fData.pageType == "product") {
     return (
       <div>
-        <ul class="list-group">
+        <ul className="list-group">
           {catg &&
             catg.length > 0 &&
             catg.map(
+             
               (catg, index) => (
+               
                 console.log(catg),
                 (
                   <div className="list">
+                 
                     <li
-                      class="list-group-item"
+                      className="list-group-item"
                       key={catg.id}
                       onClick={clickedItem}
                       id={catg.id}
+                    
                     >
                       <div className="row" id={catg.id}>
                         <img
@@ -44,7 +54,7 @@ const ListData = (props) => {
   } else {
     return (
       <div>
-        <ul class="list-group">
+        <ul className="list-group">
           {catg &&
             catg.length > 0 &&
             catg.map(
@@ -53,10 +63,10 @@ const ListData = (props) => {
                 (
                   <div className="list">
                     <li
-                      class="list-group-item"
-                      key={catg.id}
-                      onClick={clickedItem}
-                      id={catg.id}
+                       className="list-group-item"
+                       key={catg.id}
+                       onClick={clickedItem}
+                       id={catg.id}
                     >
                       <div className="row" id={catg.id}>
                         <img

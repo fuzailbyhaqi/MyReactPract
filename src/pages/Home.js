@@ -12,8 +12,15 @@ import AxiosHelper from "../helper/helper.ts";
 import Constants from "../constants/Constants.ts";
 import Login from "../components/Login";
 import ListData from "../components/ListData";
+import { Link } from "react-router-dom";
 
 const Home = () => {
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    console.log("user: "+loggedInUser.token);
+  }, []);
+
+  const [user, setUser] = useState();
   const [catg, setCatg] = useState([]);
   /*useEffect(() => {
     fetchRegions();
@@ -92,7 +99,11 @@ const Home = () => {
       console.log(e);
       //  alert(e.message);
     }
+
+    setUser(enteredFormData);
+    localStorage.setItem("user", enteredFormData);
   };
+
   return (
     <div>
       <div className="container-fluid">
@@ -100,6 +111,7 @@ const Home = () => {
         <button className="buttonHome" onClick={fetchRegions}>
           Get Data
         </button>
+
         <ListData fData={catg} />
         <p>{loading}</p>
 

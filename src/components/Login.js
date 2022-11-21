@@ -1,26 +1,41 @@
 import "./Login.css";
 import React, { useState } from "react";
 const Login = (props) => {
+
   const [enteredEmail, setEmail] = useState("");
   const [enteredPassword, setPassword] = useState("");
+  const [errorEmail, setErrorEmail] = useState('');
+  const [errorPwd, setErrorPwd] = useState('');
 
   const passwordChangeHandler = (event) => {
-    console.log(event.target.value);
     setPassword(event.target.value);
   };
   const emailChangeHandler = (event) => {
     setEmail(event.target.value);
   };
   const submitHandler = (event) => {
-    const formData = {
-      email: enteredEmail,
-      password: enteredPassword,
-    };
-
-    props.onSaveData(formData);
+    validateData();
+    console.log(enteredPassword)
+  
+        const formData = {
+          email: enteredEmail,
+          password: enteredPassword,
+        };
+        console.log(formData);
+        props.onSaveData(formData);
+      
     //  setEmail("");
     // setPassword("");
   };
+
+  const validateData = () => {
+    if (enteredEmail === '') setErrorEmail("Email is required");
+    else setErrorEmail('');
+
+    if (enteredPassword === '') setErrorPwd("Password is required");
+    else setErrorPwd('');
+  };
+
   return (
     <div>
       <div
@@ -47,12 +62,6 @@ const Login = (props) => {
             <div className="modal-body mx-3">
               <div className="md-form mb-5">
                 <i className="fas fa-envelope prefix grey-text"></i>
-                <input
-                  type="email"
-                  id="defaultForm-email"
-                  onChange={emailChangeHandler}
-                  className="form-control validate"
-                />
                 <label
                   data-error="wrong"
                   data-success="right"
@@ -60,16 +69,17 @@ const Login = (props) => {
                 >
                   Your email
                 </label>
+                <input
+                  type="email"
+                  id="defaultForm-email"
+                  onChange={emailChangeHandler}
+                  className="form-control validate"
+                />
+                <span className="text-danger">{errorEmail}</span>
               </div>
 
               <div className="md-form mb-4">
                 <i className="fas fa-lock prefix grey-text"></i>
-                <input
-                  type="password"
-                  id="defaultForm-pass"
-                  onChange={passwordChangeHandler}
-                  className="form-control validate"
-                />
                 <label
                   data-error="wrong"
                   data-success="right"
@@ -77,6 +87,13 @@ const Login = (props) => {
                 >
                   Your password
                 </label>
+                <input
+                  type="password"
+                  id="defaultForm-pass"
+                  onChange={passwordChangeHandler}
+                  className="form-control validate"
+                />
+                <span className="text-danger">{errorPwd}</span>
               </div>
             </div>
             <div className="modal-footer d-flex justify-content-center">

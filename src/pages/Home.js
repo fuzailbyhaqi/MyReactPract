@@ -22,6 +22,7 @@ const Home = () => {
 
   const [user, setUser] = useState();
   const [catg, setCatg] = useState([]);
+
   /*useEffect(() => {
     fetchRegions();
   }, []);*/
@@ -84,16 +85,12 @@ const Home = () => {
   const saveLoginFormDataHandler = (enteredFormData) => {
     console.log(enteredFormData.email);
     console.log(enteredFormData.password);
-    const obj = {
-      email: enteredFormData.email,
-      password: enteredFormData.password,
-    };
     try {
       let request = new AxiosHelper(Constants.MAPOLITIC_LOGIN);
-      let result = request.post(obj);
+      let result = request.post(enteredFormData);
       console.log(result);
       if (result.success) {
-        console.log(result);
+        console.log("Success "+result);
       }
     } catch (e) {
       console.log(e);

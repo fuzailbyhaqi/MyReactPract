@@ -9,7 +9,7 @@ export default class AxiosHelper {
   constructor(endPoint: string) {
     this.endPoint = endPoint;
     axios.defaults.baseURL = "https://api.pkubite.com/";
-    // axios.defaults.baseURL = "https://mapoliticsapi.azurewebsites.net/";
+   //  axios.defaults.baseURL = "https://mapoliticsapi.azurewebsites.net/";
   }
 
   public get(config?: AxiosRequestConfig): Promise<any> {

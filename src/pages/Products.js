@@ -2,20 +2,26 @@ import React, { useState, useEffect } from "react";
 import "./Home.css";
 import AxiosHelper from "../helper/helper.ts";
 import ListData from "../components/ListData";
+import { useLocation } from "react-router-dom";
 
 const Products = (props) => {
-  console.log(props.catId);
+  const location = useLocation();
+  const categoryId = location.state.catId;
+  console.log("cat" + location.state.catId);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState([]);
   const [pageNO, setPage] = useState(1);
 
+  useEffect(() => {
+    fetchData();
+  }, []);
   const fetchData = () => {
     console.log(pageNO);
     setLoading("Loading..");
     setData([]);
     const pageSize = 3;
     let server = new AxiosHelper(
-      `/api/FoodDetail/GetAllByCategoryId?foodCategoryId=${1}&pageNo=${pageNO}&pageSize=${pageSize}`
+      `/api/FoodDetail/GetAllByCategoryId?foodCategoryId=${categoryId}&pageNo=${pageNO}&pageSize=${pageSize}`
     );
     server
       .get()

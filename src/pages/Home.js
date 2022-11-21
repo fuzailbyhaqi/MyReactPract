@@ -17,7 +17,8 @@ import { Link } from "react-router-dom";
 const Home = () => {
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
-    console.log("user: "+loggedInUser.token);
+    const json = JSON.stringify(loggedInUser);
+    console.log("user: " + json.result);
   }, []);
 
   const [user, setUser] = useState();
@@ -85,12 +86,14 @@ const Home = () => {
   const saveLoginFormDataHandler = (enteredFormData) => {
     console.log(enteredFormData.email);
     console.log(enteredFormData.password);
+    let res;
     try {
       let request = new AxiosHelper(Constants.MAPOLITIC_LOGIN);
-      let result = request.post(enteredFormData);
-      console.log(result);
-      if (result.success) {
-        console.log("Success "+result);
+      res = request.post(enteredFormData);
+      console.log(res);
+      console.log(res);
+      if (res.success) {
+        console.log("Success " + res.message);
       }
     } catch (e) {
       console.log(e);
@@ -98,7 +101,7 @@ const Home = () => {
     }
 
     setUser(enteredFormData);
-    localStorage.setItem("user", enteredFormData);
+    localStorage.setItem("user", res);
   };
 
   return (

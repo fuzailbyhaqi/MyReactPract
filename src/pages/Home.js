@@ -12,16 +12,17 @@ import AxiosHelper from "../helper/helper.ts";
 import Constants from "../constants/Constants.ts";
 import Login from "../components/Login";
 import ListData from "../components/ListData";
-import { Link } from "react-router-dom";
 
 const Home = () => {
+  let [isLoggedIn, setLoggedIn] = useState(false);
+
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
-    const json = JSON.stringify(loggedInUser);
-    console.log("user: " + json.result);
+    if (loggedInUser !== "") setLoggedIn(true);
+    console.log(isLoggedIn);
+    console.log(loggedInUser);
   }, []);
 
-  const [user, setUser] = useState();
   const [catg, setCatg] = useState([]);
 
   /*useEffect(() => {
@@ -84,13 +85,13 @@ const Home = () => {
   };
 
   const saveLoginFormDataHandler = (enteredFormData) => {
+    enteredFormData.preventDefault();
     console.log(enteredFormData.email);
     console.log(enteredFormData.password);
     let res;
     try {
       let request = new AxiosHelper(Constants.MAPOLITIC_LOGIN);
       res = request.post(enteredFormData);
-      console.log(res);
       console.log(res);
       if (res.success) {
         console.log("Success " + res.message);
@@ -100,23 +101,28 @@ const Home = () => {
       //  alert(e.message);
     }
 
-    setUser(enteredFormData);
-    localStorage.setItem("user", res);
+    // setUser(enteredFormData);
+    localStorage.setItem("user", "fuzail");
+    setLoggedIn(true);
+  };
+
+  const onLogoutHandler = () => {
+    localStorage.clear();
+    setLoggedIn(false);
   };
 
   return (
     <div>
       <div className="container-fluid">
-        <Login onSaveData={saveLoginFormDataHandler} />
         <button className="buttonHome" onClick={fetchRegions}>
           Get Data
         </button>
+        {!isLoggedIn && <Login onSaveData={saveLoginFormDataHandler} />}
+        {isLoggedIn && <button onClick={onLogoutHandler}>Logout</button>}
 
         <ListData fData={catg} />
         <p>{loading}</p>
-
         <Banner bannerId="tm-main-bg" />
-
         <main>
           <section className="tm-welcome">
             <TextLabel name="Welcome to Turkey" />

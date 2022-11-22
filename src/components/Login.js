@@ -65,9 +65,10 @@ const Login = (props) => {
                 <label
                   data-error="wrong"
                   data-success="right"
-                  for="defaultForm-email"
+                  htmlFor="defaultForm-email"
+                  style={{marginLeft: "10px"}}
                 >
-                  Your email
+                  Email
                 </label>
                 <input
                   type="email"
@@ -83,9 +84,10 @@ const Login = (props) => {
                 <label
                   data-error="wrong"
                   data-success="right"
-                  for="defaultForm-pass"
+                  htmlFor="defaultForm-pass"
+                  style={{marginLeft: "10px"}}
                 >
-                  Your password
+                  Password
                 </label>
                 <input
                   type="password"

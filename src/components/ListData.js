@@ -9,8 +9,6 @@ const ListData = (props) => {
   const catg = props.fData.data;
   const navigate = useNavigate();
   const clickedItem = (event) => {
-    console.log(event.target.id);
-    console.log(event.target);
     navigate("/products", { state: { catId: event.target.id } });
   };
 
@@ -22,7 +20,7 @@ const ListData = (props) => {
             catg.length > 0 &&
             catg.map(
               (catg, index) => (
-                console.log(catg),
+            
                 (
                   <div className="list">
                     <li
@@ -58,7 +56,7 @@ const ListData = (props) => {
             catg.length > 0 &&
             catg.map(
               (catg, index) => (
-                console.log(catg),
+            
                 (
                   <div className="list">
                     <li

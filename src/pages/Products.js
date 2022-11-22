@@ -7,16 +7,18 @@ import { useLocation } from "react-router-dom";
 const Products = (props) => {
   const location = useLocation();
   const categoryId = location.state.catId;
-  console.log("cat" + location.state.catId);
+  console.log("cat " + location.state.catId);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState([]);
   const [pageNO, setPage] = useState(1);
 
   useEffect(() => {
+    console.log("useeffect");
     fetchData();
   }, []);
+
   const fetchData = () => {
-    console.log(pageNO);
+    console.log("Current Page: " + pageNO);
     setLoading("Loading..");
     setData([]);
     const pageSize = 3;
@@ -30,7 +32,6 @@ const Products = (props) => {
           pageType: "product",
           data: res.result.data,
         };
-        console.log("Results: " + obj);
         setData(obj);
         setLoading("");
       })
@@ -39,18 +40,21 @@ const Products = (props) => {
       });
   };
 
-  const nextClickHandler = () => {
-    const val = pageNO + 1;
-    setPage(val);
+  const nextClickHandler =async (e) => {
+    e.preventDefault();
+   // pageNO = pageNO + 1;
+   //const newPage=pageNO+1
+    await setPage(pageNO+1);
     console.log("Next: " + pageNO);
-    fetchData();
+    await fetchData();
   };
 
-  const prevClickHandler = () => {
-    const val = pageNO - 1;
-    setPage(val);
+  const prevClickHandler = async(e) => {
+    e.preventDefault();
+  //  pageNO = pageNO - 1;
+   await setPage(pageNO-1);
     console.log("Prev: " + pageNO);
-    fetchData();
+    await fetchData();
   };
 
   return (
@@ -59,13 +63,14 @@ const Products = (props) => {
         <button className="buttonHome" onClick={nextClickHandler}>
           Get Data
         </button>
-        <ListData fData={data} />
-        <p>{loading}</p>
-
-        <button onClick={prevClickHandler}>Prev</button>
-        <button className="btn-next" onClick={nextClickHandler}>
+        <button className="btn-next" onClick={this.prevClickHandler}>
+          Prev
+        </button>
+        <button className="btn-next" onClick={this.nextClickHandler}>
           Next
         </button>
+        <ListData fData={data} />
+        <p>{loading}</p>
       </div>
     </div>
   );

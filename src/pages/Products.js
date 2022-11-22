@@ -40,19 +40,19 @@ const Products = (props) => {
       });
   };
 
-  const nextClickHandler =async (e) => {
+  nextClickHandler = async (e) => {
     e.preventDefault();
-   // pageNO = pageNO + 1;
-   //const newPage=pageNO+1
-    await setPage(pageNO+1);
+    // pageNO = pageNO + 1;
+    //const newPage=pageNO+1
+    await setPage(pageNO + 1);
     console.log("Next: " + pageNO);
     await fetchData();
   };
 
-  const prevClickHandler = async(e) => {
+  prevClickHandler = async (e) => {
     e.preventDefault();
-  //  pageNO = pageNO - 1;
-   await setPage(pageNO-1);
+    //  pageNO = pageNO - 1;
+    await setPage(pageNO - 1);
     console.log("Prev: " + pageNO);
     await fetchData();
   };
@@ -63,10 +63,10 @@ const Products = (props) => {
         <button className="buttonHome" onClick={nextClickHandler}>
           Get Data
         </button>
-        <button className="btn-next" onClick={this.prevClickHandler}>
+        <button className="btn-next" onClick={this.prevClickHandler()}>
           Prev
         </button>
-        <button className="btn-next" onClick={this.nextClickHandler}>
+        <button className="btn-next" onClick={this.nextClickHandler()}>
           Next
         </button>
         <ListData fData={data} />

@@ -5,9 +5,10 @@ import ListData from "../components/ListData";
 import { useLocation } from "react-router-dom";
 
 const Products = (props) => {
+
   const location = useLocation();
+  console.log("CatId: "+location.state.catId)
   const categoryId = location.state.catId;
-  console.log("cat " + location.state.catId);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState([]);
   const [pageNO, setPage] = useState(1);
@@ -40,7 +41,7 @@ const Products = (props) => {
       });
   };
 
-  nextClickHandler = async (e) => {
+   let nextClickHandler = async (e) => {
     e.preventDefault();
     // pageNO = pageNO + 1;
     //const newPage=pageNO+1
@@ -49,7 +50,7 @@ const Products = (props) => {
     await fetchData();
   };
 
-  prevClickHandler = async (e) => {
+  let prevClickHandler = async (e) => {
     e.preventDefault();
     //  pageNO = pageNO - 1;
     await setPage(pageNO - 1);
@@ -63,10 +64,10 @@ const Products = (props) => {
         <button className="buttonHome" onClick={nextClickHandler}>
           Get Data
         </button>
-        <button className="btn-next" onClick={this.prevClickHandler()}>
+        <button className="btn-next" onClick={prevClickHandler}>
           Prev
         </button>
-        <button className="btn-next" onClick={this.nextClickHandler()}>
+        <button className="btn-next" onClick={nextClickHandler}>
           Next
         </button>
         <ListData fData={data} />

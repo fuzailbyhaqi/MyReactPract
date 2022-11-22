@@ -9,9 +9,13 @@ import React, { useState, useEffect } from "react";
 import apiClient from "../helper/http-common";
 import "./Home.css";
 import AxiosHelper from "../helper/helper.ts";
+import AxiosHelper2 from "../helper/helper2.ts";
 import Constants from "../constants/Constants.ts";
 import Login from "../components/Login";
 import ListData from "../components/ListData";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   let [isLoggedIn, setLoggedIn] = useState(false);
@@ -84,15 +88,16 @@ const Home = () => {
       });
   };
 
-  const saveLoginFormDataHandler = (enteredFormData) => {
-    enteredFormData.preventDefault();
+  const saveLoginFormDataHandler = async (enteredFormData) => {
     console.log(enteredFormData.email);
     console.log(enteredFormData.password);
     let res;
     try {
-      let request = new AxiosHelper(Constants.MAPOLITIC_LOGIN);
+      let request = new AxiosHelper2(Constants.MAPOLITIC_LOGIN);
       res = request.post(enteredFormData);
+
       console.log(res);
+
       if (res.success) {
         console.log("Success " + res.message);
       }
@@ -104,7 +109,16 @@ const Home = () => {
     // setUser(enteredFormData);
     localStorage.setItem("user", "fuzail");
     setLoggedIn(true);
+    //
+    toast.success("Success!");
+    await delay(2000);
+    refreshPage();
   };
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  function refreshPage() {
+    window.location.reload(false);
+  }
 
   const onLogoutHandler = () => {
     localStorage.clear();
@@ -113,6 +127,7 @@ const Home = () => {
 
   return (
     <div>
+      <ToastContainer autoClose={2000} />
       <div className="container-fluid">
         <button className="buttonHome" onClick={fetchRegions}>
           Get Data

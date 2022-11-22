@@ -18,33 +18,28 @@ const ListData = (props) => {
         <ul className="list-group">
           {catg &&
             catg.length > 0 &&
-            catg.map(
-              (catg, index) => (
-            
-                (
-                  <div className="list">
-                    <li
-                      className="list-group-item"
-                      key={catg.id}
-                      onClick={clickedItem}
+            catg.map((catg, index) => (
+              <div className="list">
+                <li
+                  className="list-group-item"
+                  key={catg.id}
+                  onClick={clickedItem}
+                  id={catg.id}
+                >
+                  <div className="row" id={catg.id}>
+                    <img
+                      className="image"
+                      src={catg.foodImagepath}
+                      alt="new"
                       id={catg.id}
-                    >
-                      <div className="row" id={catg.id}>
-                        <img
-                          className="image"
-                          src={catg.foodImagepath}
-                          alt="new"
-                          id={catg.id}
-                        />
-                        <div className="text" id={catg.id}>
-                          {catg.fullFoodName}
-                        </div>
-                      </div>
-                    </li>
+                    />
+                    <div className="text" id={catg.id}>
+                      {catg.fullFoodName}
+                    </div>
                   </div>
-                )
-              )
-            )}
+                </li>
+              </div>
+            ))}
         </ul>
       </div>
     );
@@ -54,33 +49,28 @@ const ListData = (props) => {
         <ul className="list-group">
           {catg &&
             catg.length > 0 &&
-            catg.map(
-              (catg, index) => (
-            
-                (
-                  <div className="list">
-                    <li
-                      className="list-group-item"
-                      key={catg.id}
-                      onClick={clickedItem}
+            catg.map((catg, index) => (
+              <div className="list">
+                <li
+                  className="list-group-item"
+                  key={catg.id}
+                  onClick={clickedItem}
+                  id={catg.id}
+                >
+                  <div className="row" id={catg.id}>
+                    <img
+                      className="image"
+                      src={catg.foodCategoryImagepath}
+                      alt="new"
                       id={catg.id}
-                    >
-                      <div className="row" id={catg.id}>
-                        <img
-                          className="image"
-                          src={catg.foodCategoryImagepath}
-                          alt="new"
-                          id={catg.id}
-                        />
-                        <div className="text" id={catg.id}>
-                          {catg.name}
-                        </div>
-                      </div>
-                    </li>
+                    />
+                    <div className="text" id={catg.id}>
+                      {catg.name}
+                    </div>
                   </div>
-                )
-              )
-            )}
+                </li>
+              </div>
+            ))}
         </ul>
       </div>
     );
